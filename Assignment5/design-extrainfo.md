@@ -21,3 +21,5 @@
   * The getContents() operation returns a string of products and coupons that can be paresed by the CustomerQRCode encode method to meet the requirements of the bill output.
 
 * The cashier is not modeled because the casher would have a **seperate** application that scans and decode's the customer's output QR Code (the bill) and then displays that information for the cashier on his/her system.
+
+* It is assume there is a utility Money that handles formatting of and all operations concerning money (products and coupons).
