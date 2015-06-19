@@ -31,32 +31,32 @@
 
       **1. Normal Scenario**
 
-      1.1 The customer touches the EZ Shop App icon on their phone.
+	      1.1 The customer touches the EZ Shop App icon on their phone.
 
-      1.2 The application launches.
+	      1.2 The application launches.
 
-      1.3 The application's QR Code Scanner opens from within the app.
+	      1.3 The application's QR Code Scanner opens from within the app.
 
-      1.4 The customer holds their customer card's QR code in front of the camera on their phone.
+	      1.4 The customer holds their customer card's QR code in front of the camera on their phone.
 
-      1.5 The application identifies the QR Code and reads its data.
+	      1.5 The application identifies the QR Code and reads its data.
 
-      1.6 The application initializes the customer's first name, last name, zip code, and e-mail address within the application using the QR code data.
+	      1.6 The application initializes the customer's first name, last name, zip code, and e-mail address within the application using the QR code data.
 
-      1.7 The application creates an empty shopping cart within the customer object.
+	      1.7 The application creates an empty shopping cart within the customer object.
 
-      1.8 The application enters grocery shopping mode.
+	      1.8 The application enters grocery shopping mode.
 
    **2. Non Customer QR Code Scenario**
 
-      2.1 The customer touches the EZ Shop App icon on their phone.
-      
-      2.2 The application launches.
+	      2.1 The customer touches the EZ Shop App icon on their phone.
+	      
+	      2.2 The application launches.
 
-      2.3 The application's QR Code Scanner opens from within the app.
+	      2.3 The application's QR Code Scanner opens from within the app.
 
-      2.4 The customer holds a QR for some item other than a customer card in front of the phone.
+	      2.4 The customer holds a QR for some item other than a customer card in front of the phone.
 
-      2.5 The application identifies the QR Code and reads its data.
+	      2.5 The application identifies the QR Code and reads its data.
 
-      2.6 The application produces an error message and prompts the user to scan a customer card's QR code.
+	      2.6 The application produces an error message and prompts the user to scan a customer card's QR code.
