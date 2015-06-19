@@ -28,8 +28,13 @@
    * **Post-Conditions:** The cusomter's information has been intialized, an empty shopping cart has been created in the application, and and the application is in grocery shopping mode.
 
    * **Scenarios:** 
+
       1.1 The customer touches the EZ Shop App icon on their phone.
+
       1.2 The application launches.
+
       1.3 The application's QR Code Scanner opens from within the app.
+
       1.4 The customer holds their customer card's QR code in front of the camera on their phone.
+
       1.5 The
