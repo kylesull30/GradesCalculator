@@ -40,10 +40,12 @@ The two major devices in the system are the customer's Android phone and the cas
  
 #### 3.11 EZ Shop App
 
-![EZ Shop App UM: Diagram v 0.1](EZShopUML.png)
+![EZ Shop App UML: Diagram v 0.1](EZShopUML.png)
 
 #### 3.12 POS System
-*In the case of an OO design, the internal structure of a software component would typically be expressed as a UML class diagram that represents the static class structure for the component and their relationships.*
+
+
+![POS Sys UML: Diagram v 0.1](POSSysUML.png)
 
 ### 3.2 Other Diagrams
 
