@@ -387,7 +387,7 @@
 
 	1.1 The application is on the shopping mode screen.
 
-	1.2 The user touches the "X" button.
+	1.2 The customer touches the "X" button.
 
 	1.3 The application closes.
 
@@ -395,13 +395,13 @@
 
 	2.1 The application is on the QR Code Scanner screen after the user presses the "+" or "-" button.
 
-	2.2 The user touches the "X" button.
+	2.2 The customer touches the "X" button.
 
 	2.3 The QR Code Scanner closes.
 	
 	2.4 The application returns to the shopping mode screen.
 
-	2.5 The user touches the "X" button.
+	2.5 The customer touches the "X" button.
 
 	2.6 The application closes.
 
@@ -409,11 +409,11 @@
 
 	3.1 The application is on the Bill QR Code screen.
 
-	3.2 The user touches the "X" button.
+	3.2 The customer touches the "X" button.
 
 	3.3 The application returns to the shopping mode screen.
 
-	3.4 The user touches the "X" button.
+	3.4 The customer touches the "X" button.
 
 	3.5 The application closes.
 
@@ -421,11 +421,39 @@
 
 	4.1 The application is on the Launch QR Code Scanner screen.
 
-	4.2 The user touches the "X" button.
+	4.2 The customer touches the "X" button.
 
 	4.3 The application closes.
 
+###9. Launch POS System
+   * **Requirements:** A cashier wants to start the POS System.
 
+   * **Pre-conditions:** The POS System is closed.
 
+   * **Post-Conditions:** The POS System is open.
 
+     **1. Normal Scenario**
+
+	1.1 The cashier presses the power button on the cash register machine.
+
+	1.2 The cashier enters their ID number when prompted by the POS System.
+
+	1.3 The POS System verifies the ID number from its database of cashiers.
+
+	1.4 The POS System launches the QR Code Scanner.
+
+###10. Close POS System
+   * **Requirements:** A cahsier wants to close the POS System.
+
+   * **Pre-conditions:** The POS System is open and on the Scan Bill screen.
+
+   * **Post-Conditions:** The POS System is closed.
+
+     **1. Normal Scenario**
+
+	1.1 The POS System is on the Scan Bill Screen.
+
+	1.2 The cashier touches the "X" button.
+
+	1.3 The POS System closes and powers off.
 
