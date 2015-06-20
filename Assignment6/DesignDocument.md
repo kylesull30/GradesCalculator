@@ -6,9 +6,11 @@
 
 ### 1.1 Assumptions
 
-*Describe any assumption, background, or dependencies of the software, its use, the operational environment, or significant project issues.*
-
 * It will be assumed that all customer data including shopping cart lists of coupons and products can fit in one QR Code.
+* It will be assumed the QR Code Scanner can have an expected input code format specified to it by both the EZ Shop App and the POS System. Further, it will be assumed that the Scanner can raise an exception if the formatting isn't correct (wrong type of item).
+* It will be assumed the QR Code Scanner automatically captures an image of the QR Code when it identifies one.
+
+#### EZ Shop App Assumptions
 * The GUI operations will be handled within the Main() method and are not modeled.
 * Coordination between GUI operations and operations within the classes are handled by the Main() method.
 * The QRCode generated when the customer card is scanned is in the same format as the QRCode generated when the customer chooses to pay.
@@ -17,15 +19,35 @@
   * The CustomerQRCode decode() method recognizes the lack of shopping cart contents and total value in the card's QR Code and then initializes an empty ShoppingCart within the Customer class during the instantiation of that class.
 * If a product QR Code has the AB prefix then the ProductQR code decode method sets the Product isAlcbev flag to true.
   * If the Product isAlcBev flag is set to true then the getTotalCost() method will automatically calculate the special tax for that item.
+* The QRCodeScanner automatically instantiates the correct implementation of QRCode based on the format of the given QR Code.
+* The Shopping Cart applies coupons to products **each time** getTotalValue() is called.
+  * The getContents() operation returns a string of products and coupons that can be paresed by the CustomerQRCode encode method to meet the requirements of the bill output.
+* It is assumed there is a utility Money that handles formatting of and all operations concerning money (products and coupons).
+* A customer can add coupons at anytime, even if there are no products in the cart corresponding to those coupons. The coupons will simply be ignored if they don't apply at bill generation.
+* Customers will only add or remove one product at a time. There is no way for the customer to enter multiple quantities of one item other than scanning them all individually.
+
+#### POS System Assumptions
+
+* The logic to verify signatures and enter cash amounts is contained within the cardPayment() and cashPayment() methods, respectively.
+* A cashier can only have one open bill at a time.
+* It will be assumed that the POS System has access to e-mail processing and payment processing utilities.
+* For the purpose of logging in to the POS System, it will be assumed the system has access to a simple database that lists valid cashier IDs.
+
 ### 1.2 Constraints
 
-*Describe any constraints on the system that have a significant impact on the design of the system.*
-
 * The system is constrained by the amount of data that can fit into a QR Code.
+* The system is constrained by memory and processing power on the customer's android device.
+* Manufacturers produce the products and coupons, and it is possible they could change the formatting of their QR Codes and imapct the entire system.
+* The system is constrained by the cashier's ability to accurately assess the accuracy of the customer's bill in relation to actual shopping cart contents.
+* The system is constrained by the cahsier's ability to accurately assess the accuracy of the customer's signature when paying with credit card.
+* the system is constrained by the customer's ability to accruately scan all items in their shopping cart.
 
 ### 1.3 System Environment
 
-*Describe the hardware and software that the system must operate in and interact with.*
+* The EZ Shop App will be developed on the Android platform.
+* The POS System will be devloped in core Java on a linux-based platform.
+* The POS System has a driver for an external device connected via USB that scans QR Codes.
+* The POS System has a monitor and associated driver attached to it.
 
 ## 2 Architectural Design
 
@@ -52,10 +74,6 @@ The two major devices in the system are the customer's Android phone and the cas
 #### 3.12 POS System
 
 ![POS Sys UML: Diagram v 0.1](POSSysUML.png)
-
-### 3.2 Other Diagrams
-
-*<u>Optionally</u>, you can decide to describe some dynamic aspects of your system using one or more behavioral diagrams, such as sequence and state diagrams.*
 
 ## 4 User Interface Design
 
