@@ -4,7 +4,7 @@
 
 ## 1 Use Case Diagram
 
-![Use Case Diagram v 0.2](UseCaseDiagram.png)
+![Use Case Diagram v 0.3](UseCaseDiagram.png)
 
 
 ## 2 Use Case Descriptions
@@ -101,7 +101,7 @@
 
 	2.5 The application adds the product's ID and price to the customer's list of items in the customer's shopping cart in the application.
 
-	2.6 The application calculates a sepcial tax for the beverage and adds that tax to the specialTax field of the item in the cutomer's shopping cart in the application.
+	2.6 The application calculates a special tax for the beverage and adds that tax to the specialTax field of the item in the cutomer's shopping cart in the application.
 
 	2.7 The application prints a confirmation for three seconds that "Alcoholic bevarage **X** was added to the cart."
 
