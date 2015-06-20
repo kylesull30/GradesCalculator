@@ -37,15 +37,15 @@
 
 * The system is constrained by the amount of data that can fit into a QR Code.
 * The system is constrained by memory and processing power on the customer's android device.
-* Manufacturers produce the products and coupons, and it is possible they could change the formatting of their QR Codes and imapct the entire system.
+* Manufacturers produce the products and coupons, and it is possible they could change the formatting of their QR Codes and impact the entire system.
 * The system is constrained by the cashier's ability to accurately assess the accuracy of the customer's bill in relation to actual shopping cart contents.
 * The system is constrained by the cahsier's ability to accurately assess the accuracy of the customer's signature when paying with credit card.
 * the system is constrained by the customer's ability to accruately scan all items in their shopping cart.
 
 ### 1.3 System Environment
 
-* The EZ Shop App will be developed on the Android platform.
-* The POS System will be devloped in core Java on a linux-based platform.
+* The EZ Shop App will be developed on the Android 5.0 platform.
+* The POS System will be devloped in core Java 1.7 on a linux-based platform.
 * The POS System has a driver for an external device connected via USB that scans QR Codes.
 * The POS System has a monitor and associated driver attached to it.
 
