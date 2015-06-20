@@ -261,7 +261,7 @@
 
 	1.5 The cashier scans the QR Code displayed on the phone with the POS System scanner.
 
-	1.6 The POS System decoes the QR Code and displays all of the customer's information, the list of products (to include special taxes), the list of coupons, and the total value of the cart on the POS System Display screen.
+	1.6 The POS System decodes the QR Code and displays all of the customer's information, the list of products (to include special taxes), the list of coupons, and the total value of the cart on the POS System Display screen.
 
 	1.7 The cashier hands the phone back to the customer.
 
@@ -278,5 +278,36 @@
 	2.4 The customer selects the "X" on the error message to acknowledge and close the error message.
 
 	2.5 The application enters the grocery shopping mode screen and the QR Code Scanner closes.
+
+###6. Pay
+   * **Requirements:** The Pay use case must allow the cashier to verify the accuracy of the bill by pressing the "verify" button, the customer to select a payment method by choosing "Cash", "Credit" or "Debit" and communicating it their selection verbally to the cashier (who selects the correct button on the POS System, the customer to hand the payment medium (cash or card) to the cashier, process the payment,
+
+   * **Pre-conditions:** The EZ Shop Application is in grocery shopping mode and the customer has at least one product in their shopping cart in the application.
+
+   * **Post-Conditions:** The EZ Shop app has produced and displayed a customer QR Code that encodes all customer shopping cart information,   the cashier has scanned the code and decoded the information on the POS System, and the POS System displays all of the information encoded in the QR Code.
+
+   * **Scenarios:** 
+
+      **1. Normal Scenario: Credit Card and Contents Match**
+
+	1.1 The cashier visually verifies that the contents in the cart match the bill displayed on the POS System.
+
+	1.2 If the cashier determines the contents match then the cashier toches the "Verify" button on the POS System.
+
+	1.3 The POS System asks the cashier to select the payment method by displaying options of: "Cash" or "Credit".
+
+	1.4 The cashier asks the customer how they want to pay.
+
+	1.5 The customer responds with credit.
+
+	1.6 The customer hands their credit card to the cashier.
+
+	1.7 The cashier swipes the credit card.
+
+	1.8 The cashier asks the customer to sign the signature pad that is connected to the POS System.
+
+	1.9 The customer signs on the signature pad.
+
+	1.10 
 
 
