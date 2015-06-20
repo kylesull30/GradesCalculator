@@ -8,9 +8,13 @@
 
 *Describe any assumption, background, or dependencies of the software, its use, the operational environment, or significant project issues.*
 
+* It will be assumed that all customer data including shopping cart lists of coupons and products can fit in one QR Code.
+
 ### 1.2 Constraints
 
 *Describe any constraints on the system that have a significant impact on the design of the system.*
+
+* The system is constrained by the amount of data that can fit into a QR Code.
 
 ### 1.3 System Environment
 
@@ -26,7 +30,9 @@ The two major components in this system are the EZ Shop App and the POS System. 
 
 ### 2.2 Deployment Diagram
 
-*This section should describe how the different components will be deployed on actual hardware devices. Similar to the previous subsection, this diagram may be unnecessary for simple systems; in these cases, simply state so and concisely state why.*
+The two major devices in the system are the customer's Android phone and the cashier's cash register. The QR Code Scanner Component is present on both pieces of hardware.
+
+![Deployment Diagram v 0.1](DeploymentDiagram.png)
 
 ## 3 Low-Level Design
 
