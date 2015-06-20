@@ -1,12 +1,8 @@
 # Design Document
 
-*This is the template for your design document. The parts in italics are concise explanations of what should go in the corresponding sections and should not appear in the final document.*
-
 **Author**: \<Kyle Sullivan (ksullivan40@gatech.edu)\>
 
 ## 1 Design Considerations
-
-*The subsections below describe the issues that need to be addressed or resolved prior to or while completing the design, as well as issues that may influence the design process.*
 
 ### 1.1 Assumptions
 
@@ -22,11 +18,9 @@
 
 ## 2 Architectural Design
 
-*The architecture provides the high-level design view of a system and provides a basis for more detailed design work. These subsections describe the top-level components of the system you are building and their relationships.*
-
 ### 2.1 Component Diagram
 
-*This section should provide and describe a diagram that shows the various components and how they are connected. This diagram shows the logical/functional components of the system, where each component represents a cluster of related functionality. In the case of simple systems, where there is a single component, this diagram may be unnecessary; in these cases, simply state so and concisely state why.*
+The two major components in this system are the EZ Shop App and the POS System. There are three provided components: the QR Code Scanner, Payment Processing, and E-mail Processing. The EZ Shop App provides the interface between itself and the POS System in the form of a QR Code rendered on its screen that can be scanned by the POS System. The POS System uses the EX Shop App to read and then decode a QR code that has all the information necessary to display a bill on the POS System screen. Both the EZ Shop App and the POS System use the QR Code Scanner component. The QR Code Scanner provides the interface with both by decoding the QR Codes it scans into text format that can be transmitted to those components. 
 
 ![Component Diagram v 0.1](ComponentDiagram.png)
 
@@ -36,10 +30,13 @@
 
 ## 3 Low-Level Design
 
-*Describe the low-level design for each of the system components identified in the previous section. For each component, you should provide details in the following UML diagrams to show its internal structure.*
-
 ### 3.1 Class Diagram
+ 
+#### 3.11 EZ Shop App
 
+![EZ Shop App UM: Diagram v 0.1](EZShopUML.png)
+
+#### 3.12 POS System
 *In the case of an OO design, the internal structure of a software component would typically be expressed as a UML class diagram that represents the static class structure for the component and their relationships.*
 
 ### 3.2 Other Diagrams
