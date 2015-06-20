@@ -1,24 +1,13 @@
 # Use Case Model
 
-*This is the template for your use case model. The parts in italics are concise explanations of what should go in the corresponding sections and should not appear in the final document.*
-
-**Author**: Kyle Sullivan (ksullivan40@gatech.edu)
+**Author**: \<Kyle Sullivan (ksullivan40@gatech.edu)\>
 
 ## 1 Use Case Diagram
 
-*This section should contain a use case diagram with all the actors and use cases for the system, suitably connected.*
-
-![Use Case Diagram v 0.1](UseCaseDiagram.png)
+![Use Case Diagram v 0.2](UseCaseDiagram.png)
 
 
 ## 2 Use Case Descriptions
-
-*For each use case in the use case diagram, this section should contain a description, with the following elements:*
-
-- *Requirements: High-level description of what the use case must allow the user to do.*
-- *Pre-conditions: Conditions that must be true before the use case is run.*
-- *Post-conditions Conditions that must be true once the use case is run.*
-- *Scenarios: Sequence of events that characterize the use case. This part may include multiple scenarios, for normal, alternate, and exceptional event sequences. These scenarios may be expressed as a list of steps in natural language or as sequence diagrams.*
 
 ### Definitions:
 
@@ -69,7 +58,7 @@
 
 	2.6 The application produces an error message: "That is not a customer card QR code. Please scan a customer card QR code or close the application."
 
-	2.7 The user selects the "X" on the error message to acknowledge and close the error message.
+	2.7 The customer selects the "X" on the error message to acknowledge and close the error message.
 
 	2.8 The QR Code Scanner remains open awaiting a customer card QR code.
 
@@ -280,11 +269,11 @@
 	2.5 The application enters the grocery shopping mode screen and the QR Code Scanner closes.
 
 ###6. Pay
-   * **Requirements:** The Pay use case must allow the cashier to verify the accuracy of the bill by pressing the "verify" button, the customer to select a payment method by choosing "Cash", "Credit" or "Debit" and communicating it their selection verbally to the cashier (who selects the correct button on the POS System, the customer to hand the payment medium (cash or card) to the cashier, process the payment,
+   * **Requirements:** The Pay use case must allow the cashier to verify the accuracy of the bill by pressing the "verify" button, the customer to select a payment method by choosing "Cash", "Credit" or "Debit" and communicating it their selection verbally to the cashier (who selects the correct button on the POS System), the customer to hand the payment medium (cash or card) to the cashier, the cashier to process the payment, and the POS System to e-mail the receipt to the customer.
 
    * **Pre-conditions:** The EZ Shop Application is in grocery shopping mode and the customer has at least one product in their shopping cart in the application.
 
-   * **Post-Conditions:** The EZ Shop app has produced and displayed a customer QR Code that encodes all customer shopping cart information,   the cashier has scanned the code and decoded the information on the POS System, and the POS System displays all of the information encoded in the QR Code.
+   * **Post-Conditions:** The cashier has verified the contents of the cart match the bill, the customer has paid for the bill, and the POS System has e-mailed the receipt to the customer.
 
    * **Scenarios:** 
 
@@ -292,13 +281,13 @@
 
 	1.1 The cashier visually verifies that the contents in the cart match the bill displayed on the POS System.
 
-	1.2 If the cashier determines the contents match then the cashier toches the "Verify" button on the POS System.
+	1.2 The cashier determines the contents match and touches the "Verify" button on the POS System.
 
 	1.3 The POS System asks the cashier to select the payment method by displaying options of: "Cash" or "Credit".
 
 	1.4 The cashier asks the customer how they want to pay.
 
-	1.5 The customer responds with credit.
+	1.5 The customer responds with credit and the cashier selects the "Credit" button.
 
 	1.6 The customer hands their credit card to the cashier.
 
@@ -308,6 +297,135 @@
 
 	1.9 The customer signs on the signature pad.
 
-	1.10 
+	1.10 The cashier visually verifies the signature and touches the "Accept" button on the POS System.
+
+	1.11 The POS System e-mails a receipt to the customer by utilizing the data listed on the bill and the POS System returns to the scan screen (awaiting the next bill).
+
+	1.12 The cashier hands the credit card to the customer.
+
+      **2. Alternate Scenario: Cash and Contents Match**
+
+	2.1 The cashier visually verifies that the contents in the cart match the bill displayed on the POS System.
+
+	2.2 The cashier determines the contents match and touches the "Verify" button on the POS System.
+
+	2.3 The POS System asks the cashier to select the payment method by displaying options of: "Cash" or "Credit".
+
+	2.4 The cashier asks the customer how they want to pay.
+
+	2.5 The customer responds with cash and the cashier selects the "Cash" button.
+
+	2.6 The customer hands cash in the amount greater than or equal to the total cost of the bill to the cashier.
+
+	2.7 The cashier accepts the cash from the customer.
+
+	2.8 The cashier enters the amount of cash in the POS System by using the on-screen numberered key pad.
+
+	2.9 The POS System calculates the change due, prints the change due amount on the screen of the POS System, and opens the cash drawer.
+
+	2.10 The cashier puts the cash in the drawer and draws out the exact amount of change due.
+
+	2.11 The cashier hands the cash to the customer and closes the cash drawer.
+
+	2.12 The POS System e-mails a receipt to the customer by utilizing the data listed on the bill and the POS System returns to the scan screen (awaiting the next bill).
+
+      **3. Exceptional Scenario: Contents Don't Match the Bill**
+
+	2.1 The cashier visually verifies that the contents in the cart match the bill displayed on the POS System.
+
+	2.2 The cashier determines the contents of the shopping cart don't match, touches the "Cancel" button on the POS System, and the POS System returns to the scan screen (awaiting the next bill) .
+
+	2.3 The cashier informs the customer.
+
+	2.4 The customer returns to the store to return unscanned items or to remove items from the list.
+
+###7. Scan QR Code
+   * **Requirements:** A customer or cashier presents a QR Code to device's scanner (a camera on a phone or a scanner on a POS System) and the scanner reads and then decodes the QR Code into the correct format.
+
+   * **Pre-conditions:** The application or POS System has communicated the format of the code that it expects to the QR Code Scanner (Customer Card QR Code (no shopping cart), Customer Card QR Code (Shopping Cart included), Product QR Code, or Coupon QR Code.
+
+   * **Post-Conditions:** The QR Code Scanner has read the code and decoded the code into the expcted format.
+
+     **1. Normal Scenario: Incoming Code Matches Expectation**
+
+	1.1 The customer or cashier opens the QR Code Scanner and communicates the expected format of the incoming code via the application or POS System.
+
+	1.2 The scanner looks for a code to be presented to its sensor.
+
+	1.3 The customer or cashier holds a QR code (of the correct format) in front of their device's sensor.
+
+	1.4 The QR Code Scanner reads the QR Code and decodes the code into the expcted text format.
+
+	1.5 The QR Code Scanner returns the textual formatted code back to the applicaiton or POS System.
+
+     **2. Exceptional Scenario: Incoming Code Doesn't Match Expectation**
+
+	2.1 The customer or cashier opens the QR Code Scanner and communicates the expected format of the incoming code via the application or POS System.
+
+	2.2 The scanner looks for a code to be presented to its sensor.
+
+	2.3 The customer or cashier holds a QR code (of the incorrect format) in front of their device's sensor.
+
+	2.4 The QR Code Scanner reads the QR Code and determines it is not the correct format.
+
+	2.5 The application produces an error message: "That is not a **QR CODE TYPE** QR code. Please scan a **QR CODE TYPE** QR code."
+
+	2.6 The user selects the "X" on the error message to acknowledge and close the error message.
+
+	2.7 The QR Code Scanner remains open awaiting a correctly formatted QR code.
+
+	2.8 The customer or cahsier either scans a correctly formatted QR code or closes the application.
+
+###8. Close App
+   * **Requirements:** A customer wants to exit the application from one of many possible states.
+
+   * **Pre-conditions:** The application is open.
+
+   * **Post-Conditions:** The application is closed.
+
+     **1. Normal Scenario: Shopping Mode Screen**
+
+	1.1 The application is on the shopping mode screen.
+
+	1.2 The user touches the "X" button.
+
+	1.3 The application closes.
+
+      **2. Alternate Scenario: QR Code Scanner Screen**
+
+	2.1 The application is on the QR Code Scanner screen after the user presses the "+" or "-" button.
+
+	2.2 The user touches the "X" button.
+
+	2.3 The QR Code Scanner closes.
+	
+	2.4 The application returns to the shopping mode screen.
+
+	2.5 The user touches the "X" button.
+
+	2.6 The application closes.
+
+      **3. Alternate Scenario: Bill QR Code Screen**
+
+	3.1 The application is on the Bill QR Code screen.
+
+	3.2 The user touches the "X" button.
+
+	3.3 The application returns to the shopping mode screen.
+
+	3.4 The user touches the "X" button.
+
+	3.5 The application closes.
+
+      **4. Exceptional Scenario: Launch QR Code Scanner Screen**
+
+	4.1 The application is on the Launch QR Code Scanner screen.
+
+	4.2 The user touches the "X" button.
+
+	4.3 The application closes.
+
+
+
 
 
