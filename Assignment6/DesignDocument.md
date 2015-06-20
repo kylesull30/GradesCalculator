@@ -44,7 +44,6 @@ The two major devices in the system are the customer's Android phone and the cas
 
 #### 3.12 POS System
 
-
 ![POS Sys UML: Diagram v 0.1](POSSysUML.png)
 
 ### 3.2 Other Diagrams
@@ -52,5 +51,17 @@ The two major devices in the system are the customer's Android phone and the cas
 *<u>Optionally</u>, you can decide to describe some dynamic aspects of your system using one or more behavioral diagrams, such as sequence and state diagrams.*
 
 ## 4 User Interface Design
-*For GUI-based systems, this section should provide the specific format/layout of the user interface of the system (e.g., in the form of graphical mockups).*
+
+
+###4.1 Shopping Mode Screen
+
+* This is the primary screen for the EZShop App. It has the add coupon/product button, the subtract product button, and the pay button. In addition it has the small "X" that allows the customer to exit the app.
+
+![Shopping Mode Screen](ShoppingModeScreen.bmp)
+
+###4.2 Shopping Mode Screen
+
+* This is the QR Code Scanner screen that is used anytime a QR code is scanned. This is also launched during the app launch. The only differences are the confirmation or error messages that are produced based on the expected format of the incoming code as defined by the application prior to launching the scanner.
+
+![QR Code Scanner Screen](QRCodeScanner.bmp)
 
