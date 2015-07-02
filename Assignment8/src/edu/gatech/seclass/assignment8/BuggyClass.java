@@ -21,10 +21,15 @@ public class BuggyClass {
 		
 	}
 	
-	// As per method description, every statement coverage test suite reveals the fault.
-	// As per subsumption relationship every branch coverage test suite implies 
-	// a particular statement coverage test suite. Therefore every branch coverage
-	// test suite must contain a statement coverage test suite that reveals the fault.
+	/* 
+	* As per method description, every 100% statement coverage test suite reveals the fault.
+	* As per subsumption relationship every 100% branch coverage test suite implies 
+	* a particular 100% statement coverage test suite. The description implies
+	* that all statement coverage test suites for this method reveal the fault.
+	* Therefore every branch coverage test suite subsumes a statement coverage test suite 
+	* that reveals the fault.
+	* */ 
+	
 	public void method2(){
 			
 		System.out.println("such a method cannot be created");
