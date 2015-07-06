@@ -9,6 +9,15 @@ public class Course {
 	public Course(Students students, Grades grades){
 		this.students = students;
 		this.grades = grades;
+		this.processAttendance();
+	}
+	
+	private void processAttendance(){
+		HashSet<Student> studentsRoster = this.students.getAllStudents();
+		
+		for (Student s : studentsRoster) {
+            s.setAttendance(grades.getAttendanceById(s.getGtid()));
+        }
 	}
 
 	public int getNumStudents() {
@@ -16,13 +25,11 @@ public class Course {
 	}
 
 	public int getNumAssignments() {
-		// TODO Auto-generated method stub
-		return 0;
+		return grades.getNumAssignments();
 	}
 
 	public int getNumProjects() {
-		// TODO Auto-generated method stub
-		return 0;
+		return grades.getNumProjects();
 	}
 
 	public HashSet<Student> getStudents() {

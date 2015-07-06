@@ -6,20 +6,13 @@ public class Student {
 	private String gtID;
 	private int attendance;
 	private String team;
+	private String email;
 	
-	/*public Student (String name, String gtID, int attendance, String team){
+	public Student (String name, String gtID, String email){
 		this.name = name;
 		this.gtID = gtID;
-		this.attendance = attendance;
-		this.team = team;
-	}*/
-	
-	public Student (String name, String gtID){
-		this.name = name;
-		this.gtID = gtID;
+		this.email = email;
 	}
-
-
 
 	public String getName() {
 		return this.name;
@@ -43,6 +36,10 @@ public class Student {
 	
 	public void setTeam(String team){
 		this.team = team;
+	}
+	
+	public String getEmail(){
+		return this.email;
 	}
 
 }

@@ -1,6 +1,6 @@
 package edu.gatech.seclass.gradescalculator;
 
-//Borrowed from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
+ 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,13 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class Students {
-	//private File dbFile;
 	private HashMap<String, Student> studentsTable = new HashMap<>();
 	private XSSFWorkbook workBook;
 	
 	public Students(String studentsDB){
 		try {
-			//Begin borrowed code
+			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 			FileInputStream file = new FileInputStream(new File(studentsDB));
 			this.workBook = new XSSFWorkbook (file);
 			//end borrowed code
@@ -32,10 +31,9 @@ public class Students {
 			this.processTeamTable();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("File not found. Check that the student database is in the correct location.");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -53,12 +51,17 @@ public class Students {
 	    while(rowIterator.hasNext()) {
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
-            Cell cell = cellIterator.next();
+            
+	        Cell cell = cellIterator.next();
             String name = cell.getStringCellValue();
-            //System.out.println(name);
+            
             cell = cellIterator.next();
-           String gtID = String.format("%.0f", (cell.getNumericCellValue()));            
-            this.studentsTable.put(name, new Student(name, gtID));
+            String gtID = String.format("%.0f", (cell.getNumericCellValue()));  
+            
+            cell = cellIterator.next();
+            String email = cell.getStringCellValue();
+            
+            this.studentsTable.put(name, new Student(name, gtID, email));
 
 	    }
 	}
@@ -67,8 +70,8 @@ public class Students {
 		
 		XSSFSheet teamsSheet = this.workBook.getSheetAt(1);
 		Iterator<Row> rowIterator = teamsSheet.iterator();
+		
 		Row row = rowIterator.next(); //Title row
-		//System.out.println(row.cellIterator().next().getStringCellValue());
 
 		while(rowIterator.hasNext()) {
 	        row = rowIterator.next();
@@ -86,14 +89,10 @@ public class Students {
 		        }
 	        }
 		}
-
-		
 	}
 	
 	public HashSet<Student> getAllStudents(){
-		
-		HashSet<Student> studSet = new HashSet<Student>(this.studentsTable.values());
-		return studSet;
+		return new HashSet<Student>(this.studentsTable.values());
 	}
 	
 	public Student getByName(String name){
@@ -102,7 +101,6 @@ public class Students {
 
 	public Student getById(String id){
 		for (Student s : this.studentsTable.values()) {
-			//System.out.println(s.getGtid());
 			if(s.getGtid().equals(id)){
 				return s;
 			}
