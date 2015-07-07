@@ -14,7 +14,6 @@ public class Course {
 	
 	private void processAttendance(){
 		HashSet<Student> studentsRoster = this.students.getAllStudents();
-		
 		for (Student s : studentsRoster) {
             s.setAttendance(grades.getAttendanceById(s.getGtid()));
         }

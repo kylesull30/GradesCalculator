@@ -6,7 +6,7 @@ public class Student {
 	private String gtID;
 	private int attendance;
 	private String team;
-	private String email;
+	private String email;// not tested by the CourseTest suite but listed in the story card.
 	
 	public Student (String name, String gtID, String email){
 		this.name = name;
@@ -38,7 +38,7 @@ public class Student {
 		this.team = team;
 	}
 	
-	public String getEmail(){
+	public String getEmail(){// not tested by the CourseTest suite but listed in the story card.
 		return this.email;
 	}
 

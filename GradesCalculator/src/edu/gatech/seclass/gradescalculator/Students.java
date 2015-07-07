@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,7 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class Students {
-	private HashMap<String, Student> studentsTable = new HashMap<>();
+	private HashMap<String, Student> studentsTable = new HashMap<>();//Maps a student name to a Student object
 	private XSSFWorkbook workBook;
 	
 	public Students(String studentsDB){
@@ -37,26 +35,27 @@ public class Students {
 			e.printStackTrace();
 		}
 		
-
-		
-		
 	}
 	
 	private void processStudentTable(){
-		XSSFSheet studentsSheet = this.workBook.getSheetAt(0);
-		
+		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
+		XSSFSheet studentsSheet = this.workBook.getSheetAt(0);	
 		Iterator<Row> rowIterator = studentsSheet.iterator();
-		Row row = rowIterator.next(); //Title row
+		//end borrowed code
+
+		Row row = rowIterator.next(); //Skip the title row
 		
 	    while(rowIterator.hasNext()) {
+			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
-            
 	        Cell cell = cellIterator.next();
+			//end borrowed code
+
             String name = cell.getStringCellValue();
             
             cell = cellIterator.next();
-            String gtID = String.format("%.0f", (cell.getNumericCellValue()));  
+            String gtID = String.format("%.0f", cell.getNumericCellValue());  //remove scientific notation from the double value pulled from the sheet
             
             cell = cellIterator.next();
             String email = cell.getStringCellValue();
@@ -67,32 +66,34 @@ public class Students {
 	}
 	
 	private void processTeamTable(){
-		
+		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 		XSSFSheet teamsSheet = this.workBook.getSheetAt(1);
 		Iterator<Row> rowIterator = teamsSheet.iterator();
-		
+		//end borrowed code
+
 		Row row = rowIterator.next(); //Title row
 
 		while(rowIterator.hasNext()) {
+			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
-	        
+			//end borrowed code
+
 	        if (cellIterator.hasNext()){
 	            Cell cell = cellIterator.next();
-	            
 	            String teamName = cell.getStringCellValue();
 
 	            while(cellIterator.hasNext()){
 	            	cell = cellIterator.next();
 	            	String name = cell.getStringCellValue();
-	            	this.studentsTable.get(name).setTeam(teamName);
+	            	this.studentsTable.get(name).setTeam(teamName);//get the student by name and then set the team name for that student
 		        }
 	        }
 		}
 	}
 	
 	public HashSet<Student> getAllStudents(){
-		return new HashSet<Student>(this.studentsTable.values());
+		return new HashSet<Student>(this.studentsTable.values());//create and return a HashSet from HashMap's values (Student objects)
 	}
 	
 	public Student getByName(String name){
@@ -102,11 +103,11 @@ public class Students {
 	public Student getById(String id){
 		for (Student s : this.studentsTable.values()) {
 			if(s.getGtid().equals(id)){
-				return s;
+				return s;//if student found return the Student object
 			}
 		}
 		
-		return null;
+		return null;//if student not found return null
 	}
 	
 	public int getNumStudents(){
