@@ -1,5 +1,7 @@
 package edu.gatech.seclass.gradescalculator;
 
+import java.util.HashMap;
+
 public class Student {
 	
 	private String name;
@@ -7,11 +9,18 @@ public class Student {
 	private int attendance;
 	private String team;
 	private String email;// not tested by the CourseTest suite but listed in the story card.
+
 	
 	public Student (String name, String gtID, String email){
 		this.name = name;
 		this.gtID = gtID;
 		this.email = email;
+	}
+
+	public Student(String name2, String gtID2, Course course) {
+		// TODO Auto-generated constructor stub
+		this.name = name2;
+		this.gtID = gtID2;
 	}
 
 	public String getName() {
