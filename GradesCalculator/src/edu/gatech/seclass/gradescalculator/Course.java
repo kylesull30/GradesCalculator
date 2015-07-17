@@ -92,4 +92,10 @@ public class Course {
 		
 	}
 
+	public void addTeamGrades(String projectName,
+			HashMap<String, Integer> grades) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
