@@ -7,6 +7,7 @@ public class Course {
 	private Students students;
 	private Grades grades;
 	
+	
 	public Course(Students students, Grades grades){
 		this.students = students;
 		this.grades = grades;
@@ -25,11 +26,14 @@ public class Course {
 	}
 
 	public int getNumAssignments() {
-		return grades.getNumAssignments();
+		//return grades.getNumAssignments();
+		return grades.getNumberOf(Grades.ASSIGNMENT_SHEET);
+
 	}
 
 	public int getNumProjects() {
-		return grades.getNumProjects();
+		//return grades.getNumProjects();
+		return grades.getNumberOf(Grades.INDIV_PROJ_SHEET);
 	}
 
 	public HashSet<Student> getStudents() {
@@ -48,13 +52,13 @@ public class Course {
 		this.grades.addAssignment(title);
 	}
 
-	public void updateGrades(Grades grades2) {
-		this.grades.update();
+	public void updateGrades(Grades newGrades) {
+		this.grades.loadDB();
 	}
 
 	public void addGradesForAssignment(String assignmentName,
 			HashMap<Student, Integer> newGrades) {
-		this.grades.addGrades(assignmentName, newGrades, 1);
+		this.grades.addGrades(assignmentName, newGrades, Grades.ASSIGNMENT_SHEET);
 		
 	}
 
@@ -69,7 +73,22 @@ public class Course {
 
 	public void addIndividualContributions(String projectName,
 			HashMap<Student, Integer> contributions) {
-		this.grades.addGrades(projectName, contributions, 2);
+		this.grades.addGrades(projectName, contributions, Grades.INDIV_PROJ_SHEET);
+		
+	}
+
+	public void addProject(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addStudent(Student student) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateStudents(Students students) {
+		// TODO Auto-generated method stub
 		
 	}
 

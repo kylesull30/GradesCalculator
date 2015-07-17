@@ -23,18 +23,23 @@ public class Grades {
 	private HashMap<String, ArrayList<Integer>> assignments = new HashMap<>();
 	private HashMap<String, ArrayList<Integer>> projects = new HashMap<>();
 	private HashMap<String, ArrayList<Integer>> teamProjects = new HashMap<>();
+	static final int ATTENDANCE_SHEET = 0;
+	static final int ASSIGNMENT_SHEET = 1;
+	static final int INDIV_PROJ_SHEET = 2;
+	static final int GROUP_PROJ_SHEET = 3;
 
 	
 	public Grades(String gradesDB){
-
 			this.gradesDBPath = gradesDB;
-			
-			this.loadAttendanceTable();
-			this.loadAssignmentsTable();
-			this.loadProjectsTable();
-			this.loadTeamProjectsTable();
-
-
+			this.loadDB();
+	}
+	
+	public void loadDB() {
+		this.loadAttendanceTable();
+		this.loadAssignmentsTable();
+		this.loadProjectsTable();
+		this.loadTeamProjectsTable();
+		
 	}
 	private void openFileForReading(){
 		try {
@@ -52,16 +57,18 @@ public class Grades {
 	
 	private void openFileForWriting(){
 		try {
-			this.file.close();
+			if (this.file != null) this.file.close();
 			this.fileOut = new FileOutputStream(new File(this.gradesDBPath));
-
-		} catch (FileNotFoundException e) {
+		} 
+		catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
 	private void closeFileAfterWriting(){
 		try {
 			this.workBook = null;
@@ -83,7 +90,7 @@ public class Grades {
 	private void loadProjectsTable() {
 		this.openFileForReading();
 		this.projects = null;
-		this.projects = this.loadGrades(this.workBook.getSheetAt(2), false);
+		this.projects = this.loadGrades(this.workBook.getSheetAt(INDIV_PROJ_SHEET), false);
 		this.closeFileAfterReading();
 
 	}
@@ -91,7 +98,7 @@ public class Grades {
 	private void loadTeamProjectsTable() {
 		this.openFileForReading();
 		this.teamProjects = null;
-		this.teamProjects = this.loadGrades(this.workBook.getSheetAt(3), true);
+		this.teamProjects = this.loadGrades(this.workBook.getSheetAt(GROUP_PROJ_SHEET), true);
 		this.closeFileAfterReading();
 
 	}
@@ -99,14 +106,14 @@ public class Grades {
 	private void loadAssignmentsTable() {
 		this.openFileForReading();
 		this.assignments = null;
-		this.assignments = this.loadGrades(this.workBook.getSheetAt(1), false);
+		this.assignments = this.loadGrades(this.workBook.getSheetAt(ASSIGNMENT_SHEET), false);
 		this.closeFileAfterReading();
 
 	}
-	private HashMap<String, ArrayList<Integer>> loadGrades(XSSFSheet assignmentsSheet, boolean isTeamLoad){
+	private HashMap<String, ArrayList<Integer>> loadGrades(XSSFSheet sheet, boolean isTeamLoad){
 		HashMap<String, ArrayList<Integer>> gradesHashMap = new HashMap<>();
 		
-		Iterator<Row> rowIterator = assignmentsSheet.iterator();
+		Iterator<Row> rowIterator = sheet.iterator();
 		Row row = rowIterator.next(); //get assignment titles
 				
 		while(rowIterator.hasNext()) {
@@ -140,7 +147,7 @@ public class Grades {
 	private void loadAttendanceTable(){
 		this.openFileForReading();
 		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
-		XSSFSheet attendanceSheet = this.workBook.getSheetAt(0);
+		XSSFSheet attendanceSheet = this.workBook.getSheetAt(ATTENDANCE_SHEET);
 		Iterator<Row> rowIterator = attendanceSheet.iterator();
 		//end borrowed code
 		this.attendanceTable = new HashMap<>();
@@ -160,28 +167,19 @@ public class Grades {
 	    }
 	    this.closeFileAfterReading();
 	}
-	
-	public int getNumAssignments(){
+		
+	public int getNumberOf(int sheetNum){
 		this.openFileForReading();
-		XSSFSheet assignmentSheet = this.workBook.getSheetAt(1); // Individual assignments sheet
-		Iterator<Row> rowIterator = assignmentSheet.iterator();
-		Row row = rowIterator.next();
-		this.closeFileAfterReading();
-		return row.getLastCellNum() -1;//Count all columns minus the name column*/
-	}
-	
-	public int getNumProjects(){
-		this.openFileForReading();
-		XSSFSheet indivProjectSheet = this.workBook.getSheetAt(2);//Individual projects sheet
+		XSSFSheet indivProjectSheet = this.workBook.getSheetAt(sheetNum);
 		Iterator<Row> rowIterator = indivProjectSheet.iterator();
 		Row row = rowIterator.next();
+		int answer = row.getLastCellNum() -1;
 		this.closeFileAfterReading();
-		return row.getLastCellNum() -1;//Count all columns minus the name column
+		return answer;
 	}
 	public int getAttendanceById(String gtID){
 		this.loadAttendanceTable();
 		return this.attendanceTable.get(gtID).intValue();//Change form Integer to int
-
 	}
 
 	public int getAverageAssignmentGrade(String gtid) {
@@ -214,7 +212,7 @@ public class Grades {
 	
 	public void addAssignment(String title){
 		this.openFileForReading();
-		XSSFSheet assignmentSheet = this.workBook.getSheetAt(1);
+		XSSFSheet assignmentSheet = this.workBook.getSheetAt(ASSIGNMENT_SHEET);
 		Iterator<Row> rowIterator = assignmentSheet.iterator();
 		Row row = rowIterator.next();
 		Cell newCell = row.createCell(row.getLastCellNum());
@@ -231,9 +229,11 @@ public class Grades {
 
 		
 	}
-	private int getRowNumber(XSSFSheet sheet, String name){
-		//this.openFileForReading();
+	private int getRowNumber(int sheetNum, String name){
+		this.openFileForReading();
+		XSSFSheet sheet = this.workBook.getSheetAt(sheetNum);
 		int index = 99;
+		
 		Iterator<Row> rowIterator = sheet.iterator();
 		Row row = rowIterator.next(); //get assignment titles
 		Iterator<Cell> columnIterator = row.cellIterator();
@@ -243,70 +243,58 @@ public class Grades {
 	    	column = columnIterator.next();
 	    	if (column.getStringCellValue().equals(name)){
 	    		index = column.getColumnIndex();
-	    		//column.getC
 	    	}
 	    }
 	    
+		this.closeFileAfterReading();
+
 	    return index;
 	}
 	
 	public void addGrades(String title, HashMap<Student, Integer> hashOfGrades, int sheetNum){
-		this.openFileForReading();
-		
-		XSSFSheet sheet = this.workBook.getSheetAt(sheetNum);
-		int gradeIndex = this.getRowNumber(sheet, title);
-		this.closeFileAfterReading();
+		int gradeIndex = this.getRowNumber(sheetNum, title);
+		XSSFSheet sheet = null;
 		
 		for (Student s:hashOfGrades.keySet()){
 			this.openFileForReading();
+
 			sheet = this.workBook.getSheetAt(sheetNum);
 			Iterator<Row> rowIterator = sheet.iterator();
-			Row row = rowIterator.next(); //get assignment titles
+			Row row = rowIterator.next(); 
+			
 			while(rowIterator.hasNext()) {
-				
 				//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 				row = rowIterator.next();
 				Iterator<Cell> columnIterator = row.cellIterator();
 			    Cell column = columnIterator.next();
 			    //end borrowed code
 			    
-			    if (String.format("%.0f", (column.getNumericCellValue())).equals(s.getGtid()))  {
-			    	//move to column and change value
-			    	
-			    	if (row.getCell(gradeIndex) != null){
-			    		Cell oldCell = row.getCell(gradeIndex);
-			    		System.out.println("Changing " + s.getGtid()+ " and " + title + " from " + oldCell.getNumericCellValue() );
-
-			    		oldCell.setCellValue((double)hashOfGrades.get(s));
-			    		System.out.println(oldCell.getNumericCellValue());
-				    	//row.getCell(assignmentIndex).setCellValue((double)hashOfGrades.get(s));
-			    	}
-			    	else{
-			    		Cell newCell = row.createCell(gradeIndex);
-			    		newCell.setCellValue((double)hashOfGrades.get(s));
-			    	}
-			    	try {
-						this.openFileForWriting();
-						this.workBook.write(this.fileOut);
-						this.closeFileAfterWriting();
-						this.openFileForReading();						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			    if (String.format("%.0f", (column.getNumericCellValue())).equals(s.getGtid())){
+			    	this.addOrModifyCell(row, gradeIndex, hashOfGrades.get(s));   	
 			    }
-
 			}
 			this.closeFileAfterReading();
-
-		   
 		}
 	}
-	public void update() {
-		this.loadAttendanceTable();
-		this.loadAssignmentsTable();
-		this.loadProjectsTable();
-		this.loadTeamProjectsTable();
-		
+	
+	private void addOrModifyCell (Row row, int gradeIndex, int newGrade){
+		if (row.getCell(gradeIndex) != null){ //Modify existing
+    		Cell oldCell = row.getCell(gradeIndex);
+    		oldCell.setCellValue((double)newGrade);
+    	}
+    	else{//create new
+    		Cell newCell = row.createCell(gradeIndex);
+    		newCell.setCellValue((double)newGrade);
+    	}
+    	
+    	try {
+			this.openFileForWriting();
+			this.workBook.write(this.fileOut);
+			this.closeFileAfterWriting();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+	
 }
