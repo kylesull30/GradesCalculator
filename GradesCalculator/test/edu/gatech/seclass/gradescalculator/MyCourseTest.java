@@ -117,6 +117,9 @@ public class MyCourseTest {
     	String projectName = "Project 4";
         String team3 = "Team 3";
         Student student1 = new Student("Rastus Kight", "901234512", course);
+        
+        course.addProject(projectName);
+        course.updateGrades(new Grades(GRADES_DB));
 
         HashMap<String, Integer> teamGrades = new HashMap<String, Integer>();
         teamGrades.put(team3, 99);
@@ -126,7 +129,8 @@ public class MyCourseTest {
         HashMap<Student, Integer> contributions = new HashMap<Student, Integer>();
         contributions.put(student1, 93);
         course.addIndividualContributions(projectName, contributions);
-        
+        course.updateGrades(new Grades(GRADES_DB));
+
         assertEquals(88, course.getAverageProjectsGrade(student1));
         
     }
