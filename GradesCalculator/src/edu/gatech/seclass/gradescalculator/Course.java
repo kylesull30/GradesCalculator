@@ -3,10 +3,11 @@ package edu.gatech.seclass.gradescalculator;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.script.ScriptException;
+
 public class Course {
 	private Students students;
-	private Grades grades;
-	
+	private Grades grades;	
 	
 	public Course(Students students, Grades grades){
 		this.students = students;
@@ -26,13 +27,11 @@ public class Course {
 	}
 
 	public int getNumAssignments() {
-		//return grades.getNumAssignments();
 		return grades.getNumberOf(Grades.ASSIGNMENT_SHEET);
 
 	}
 
 	public int getNumProjects() {
-		//return grades.getNumProjects();
 		return grades.getNumberOf(Grades.INDIV_PROJ_SHEET);
 	}
 
@@ -96,6 +95,33 @@ public class Course {
 			HashMap<String, Integer> grades) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String getFormula() {
+		return this.grades.getFormula();
+	}
+
+	public void setFormula(String formula) {
+		this.grades.setFormula(formula);
+	}
+
+	public String getEmail(Student student) {
+		return student.getEmail();
+	}
+
+	public int getAttendance(Student student) {
+		return student.getAttendance();
+	}
+
+	public int getOverallGrade(Student student)throws GradeFormulaException {
+			
+		return grades.evaluateFormula(student.getGtid(), this.getStudentByID(student.getGtid()).getTeam());
+			
+		
+	}
+
+	public String getTeam(Student student) {
+		return student.getTeam();
 	}
 
 }

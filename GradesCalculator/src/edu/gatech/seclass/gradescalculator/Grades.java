@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -27,10 +31,14 @@ public class Grades {
 	static final int ASSIGNMENT_SHEET = 1;
 	static final int INDIV_PROJ_SHEET = 2;
 	static final int GROUP_PROJ_SHEET = 3;
+	static final String DEFAULT_FORMULA = "AT * 0.2 + AA * 0.4 + AP * 0.4";
+	private String formula;
+
 
 	
 	public Grades(String gradesDB){
 			this.gradesDBPath = gradesDB;
+			this.formula = this.DEFAULT_FORMULA;
 			this.loadDB();
 	}
 	
@@ -296,5 +304,109 @@ public class Grades {
 			e.printStackTrace();
 		}
 	}
+
+	public void setFormula(String formula) {
+		this.formula = formula;
+	}
+
+	public String getFormula() {
+		return this.formula;
+	}
+	
+	public int getOverallGrade(String name) {
+		int grade = 0;
+		//grade = this.evaluateAttendance() + this.evaluateAssignments() + this.evaluate
+		
+		
+		return grade;
+	}
+	
+	/*private double evaluateFormula(String gtID, String team){
+		double operandVal = 0.0;
+		String operator;
+		double sum = 0.0;
+		double percentage = 1.0;
+		 
+		String[] tokens = this.formula.split("\\s");
+		
+		for (int i = 0; i < tokens.length-1; i++){
+			if (this.isOperand(tokens[i])){
+				operandVal = this.assignOperandValue(tokens[i], gtID, team);
+			}
+			else if (this.isOperator(tokens[i]) ){
+				operator = tokens[i];
+			}
+			else{
+				percentage = Double.parseDouble(tokens[i]);
+			}
+			
+			//if (operand > 0 && )
+			
+		}
+		
+	}*/
+	
+	public int evaluateFormula(String gtID, String team) {
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("JavaScript");
+		String attendanceReplaced, assignmentsReplaced, projectsReplaced;
+		
+		attendanceReplaced = this.formula.replace("AT", Integer.toString(this.attendanceTable.get(gtID)));
+		assignmentsReplaced = attendanceReplaced.replace("AA", Integer.toString(this.getAverageAssignmentGrade(gtID)));
+		projectsReplaced = assignmentsReplaced.replace("AP", Integer.toString(this.getAverageProjectGrade(gtID, team)));
+		
+		try {
+			double realFormulaValue = (Double)engine.eval(projectsReplaced);
+			double roundedFormulaValue = Math.round(realFormulaValue);
+			return (int) roundedFormulaValue;
+		} catch (ScriptException e) {
+			throw new GradeFormulaException("invalid expression");
+		}
+
+	}
+	
+	/*private boolean isOperator(String token) {
+		if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	private boolean isOperand(String token){
+		if (token.equals("AT") || token.equals("AA") || token.equals("AP")){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	private double evaluateExp(double lhs, String op, double rhs){
+		if (op.equals("+")){
+			return lhs + rhs;
+		}
+		else if (op.equals("-")){
+			return lhs - rhs;
+		}
+		else if (op.equals("*")){
+			return lhs * rhs;
+		}
+		else{
+			return lhs / rhs;
+		}
+	}
+	private double assignOperandValue(String token, String gtID, String team){
+		if (token.equals("AT")){
+			return this.attendanceTable.get(gtID);
+		}
+		else if (token.equals("AA")){
+			return this.getAverageAssignmentGrade(gtID);
+		}
+		else{
+			return this.getAverageProjectGrade(gtID, team)
+		}
+	}*/
 	
 }

@@ -23,6 +23,11 @@ public class Student {
 		this.gtID = gtID2;
 	}
 
+	public Student(String name, String gtID) {
+		this.name = name;
+		this.gtID = gtID;
+	}
+
 	public String getName() {
 		return this.name;
 	}
