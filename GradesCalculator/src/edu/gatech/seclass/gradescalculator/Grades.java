@@ -23,7 +23,7 @@ public class Grades {
 	private FileInputStream file;
 	private FileOutputStream fileOut;
 	private String gradesDBPath;
-	private HashMap<String, Integer> attendanceTable = new HashMap<>();//Maps a student name to an attendance Integer value
+	private HashMap<String, Integer> attendanceTable = new HashMap<>();
 	private HashMap<String, ArrayList<Integer>> assignments = new HashMap<>();
 	private HashMap<String, ArrayList<Integer>> projects = new HashMap<>();
 	private HashMap<String, ArrayList<Integer>> teamProjects = new HashMap<>();
@@ -38,7 +38,7 @@ public class Grades {
 	
 	public Grades(String gradesDB){
 			this.gradesDBPath = gradesDB;
-			this.formula = this.DEFAULT_FORMULA;
+			this.formula = DEFAULT_FORMULA;
 			this.loadDB();
 	}
 	
@@ -300,7 +300,6 @@ public class Grades {
 			this.workBook.write(this.fileOut);
 			this.closeFileAfterWriting();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -313,100 +312,34 @@ public class Grades {
 		return this.formula;
 	}
 	
-	public int getOverallGrade(String name) {
-		int grade = 0;
-		//grade = this.evaluateAttendance() + this.evaluateAssignments() + this.evaluate
-		
-		
-		return grade;
-	}
 	
-	/*private double evaluateFormula(String gtID, String team){
-		double operandVal = 0.0;
-		String operator;
-		double sum = 0.0;
-		double percentage = 1.0;
-		 
-		String[] tokens = this.formula.split("\\s");
+	private String replaceOperands(String gtID, String team){
+
+		int studentAttendance = this.attendanceTable.get(gtID);
+		int assingmentAverage = this.getAverageAssignmentGrade(gtID); 
+		int projectAverage = this.getAverageProjectGrade(gtID, team);
 		
-		for (int i = 0; i < tokens.length-1; i++){
-			if (this.isOperand(tokens[i])){
-				operandVal = this.assignOperandValue(tokens[i], gtID, team);
-			}
-			else if (this.isOperator(tokens[i]) ){
-				operator = tokens[i];
-			}
-			else{
-				percentage = Double.parseDouble(tokens[i]);
-			}
-			
-			//if (operand > 0 && )
-			
-		}
+		String formulaAttendanceReplaced = this.formula.replace("AT", Integer.toString(studentAttendance));
+		String formulaAssignmentsReplaced = formulaAttendanceReplaced.replace("AA", Integer.toString(assingmentAverage));
+		String formulaProjectsReplaced = formulaAssignmentsReplaced.replace("AP", Integer.toString(projectAverage));
 		
-	}*/
+		return formulaProjectsReplaced;
+
+	}
 	
 	public int evaluateFormula(String gtID, String team) {
 		ScriptEngineManager manager = new ScriptEngineManager();
 		ScriptEngine engine = manager.getEngineByName("JavaScript");
-		String attendanceReplaced, assignmentsReplaced, projectsReplaced;
-		
-		attendanceReplaced = this.formula.replace("AT", Integer.toString(this.attendanceTable.get(gtID)));
-		assignmentsReplaced = attendanceReplaced.replace("AA", Integer.toString(this.getAverageAssignmentGrade(gtID)));
-		projectsReplaced = assignmentsReplaced.replace("AP", Integer.toString(this.getAverageProjectGrade(gtID, team)));
+		String replacedFormula = this.replaceOperands(gtID, team);
 		
 		try {
-			double realFormulaValue = (Double)engine.eval(projectsReplaced);
+			double realFormulaValue = (Double)engine.eval(replacedFormula);
 			double roundedFormulaValue = Math.round(realFormulaValue);
 			return (int) roundedFormulaValue;
 		} catch (ScriptException e) {
-			throw new GradeFormulaException("invalid expression");
+			throw new GradeFormulaException("You have entered an invalid grade formula.");
 		}
 
 	}
-	
-	/*private boolean isOperator(String token) {
-		if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
-	private boolean isOperand(String token){
-		if (token.equals("AT") || token.equals("AA") || token.equals("AP")){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	private double evaluateExp(double lhs, String op, double rhs){
-		if (op.equals("+")){
-			return lhs + rhs;
-		}
-		else if (op.equals("-")){
-			return lhs - rhs;
-		}
-		else if (op.equals("*")){
-			return lhs * rhs;
-		}
-		else{
-			return lhs / rhs;
-		}
-	}
-	private double assignOperandValue(String token, String gtID, String team){
-		if (token.equals("AT")){
-			return this.attendanceTable.get(gtID);
-		}
-		else if (token.equals("AA")){
-			return this.getAverageAssignmentGrade(gtID);
-		}
-		else{
-			return this.getAverageProjectGrade(gtID, team)
-		}
-	}*/
 	
 }
