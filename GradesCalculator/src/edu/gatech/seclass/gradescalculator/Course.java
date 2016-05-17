@@ -76,25 +76,21 @@ public class Course {
 		
 	}
 
-	public void addProject(String string) {
-		// TODO Auto-generated method stub
-		
+	public void addProject(String project) {
+		this.grades.addProject(project);
 	}
 
 	public void addStudent(Student student) {
-		// TODO Auto-generated method stub
-		
+		this.students.addStudent(student);
 	}
 
 	public void updateStudents(Students students) {
-		// TODO Auto-generated method stub
-		
+		this.students.updateDB();
 	}
 
 	public void addTeamGrades(String projectName,
 			HashMap<String, Integer> grades) {
-		// TODO Auto-generated method stub
-		
+		this.grades.addTeamGrades(projectName, grades, Grades.GROUP_PROJ_SHEET);
 	}
 
 	public String getFormula() {

@@ -285,6 +285,32 @@ public class Grades {
 		}
 	}
 	
+	public void addTeamGrades(String title, HashMap<String, Integer> hashOfGrades, int sheetNum){
+		int gradeIndex = this.getRowNumber(sheetNum, title);
+		XSSFSheet sheet = null;
+		
+		for (String s:hashOfGrades.keySet()){
+			this.openFileForReading();
+
+			sheet = this.workBook.getSheetAt(sheetNum);
+			Iterator<Row> rowIterator = sheet.iterator();
+			Row row = rowIterator.next(); 
+			
+			while(rowIterator.hasNext()) {
+				//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
+				row = rowIterator.next();
+				Iterator<Cell> columnIterator = row.cellIterator();
+			    Cell column = columnIterator.next();
+			    //end borrowed code
+			    
+			    if (column.getStringCellValue().equals(s)){
+			    	this.addOrModifyCell(row, gradeIndex, hashOfGrades.get(s));   	
+			    }
+			}
+			this.closeFileAfterReading();
+		}
+	}
+	
 	private void addOrModifyCell (Row row, int gradeIndex, int newGrade){
 		if (row.getCell(gradeIndex) != null){ //Modify existing
     		Cell oldCell = row.getCell(gradeIndex);
@@ -340,6 +366,31 @@ public class Grades {
 			throw new GradeFormulaException("You have entered an invalid grade formula.");
 		}
 
+	}
+
+	public void addProject(String title) {
+		this.openFileForReading();
+		XSSFSheet idivProjSheet = this.workBook.getSheetAt(INDIV_PROJ_SHEET);
+		Iterator<Row> rowIterator = idivProjSheet.iterator();
+		Row row = rowIterator.next();
+		Cell newCell = row.createCell(row.getLastCellNum());
+		newCell.setCellValue(title);
+		
+		XSSFSheet teamProjSheet = this.workBook.getSheetAt(GROUP_PROJ_SHEET);
+		Iterator<Row> rowIterator2 = teamProjSheet.iterator();
+		Row row2 = rowIterator2.next();
+		Cell newCell2 = row2.createCell(row.getLastCellNum());
+		newCell2.setCellValue(title);
+		
+		try {
+			this.openFileForWriting();
+			this.workBook.write(this.fileOut);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.closeFileAfterWriting();		
 	}
 	
 }

@@ -113,4 +113,13 @@ public class Students {
 	public int getNumStudents(){
 		return this.studentsTable.size();
 	}
+
+	public void addStudent(Student student) {
+		this.studentsTable.put(student.getName(), student);
+	}
+
+	public void updateDB() {
+		// TODO Auto-generated method stub
+		
+	}
 }
