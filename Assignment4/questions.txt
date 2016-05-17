@@ -1,5 +1,0 @@
-1. Will the essays only contain the essay text (i.e. no titles, administrative information (name, date, etc.), or headers)?
-The whole file should be considered in your counting, and there will be no header or footer sections.
-
-2. What are the maximum and minimum essay lengths (in word limits) that will be analyzed by this program?
-No limit.
