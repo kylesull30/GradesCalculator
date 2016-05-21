@@ -21,10 +21,8 @@ public class Students {
 	
 	public Students(String studentsDB){
 		try {
-			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 			FileInputStream file = new FileInputStream(new File(studentsDB));
 			this.workBook = new XSSFWorkbook (file);
-			//end borrowed code
 			this.processStudentTable();
 			this.processTeamTable();
 
@@ -38,19 +36,15 @@ public class Students {
 	}
 	
 	private void processStudentTable(){
-		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 		XSSFSheet studentsSheet = this.workBook.getSheetAt(0);	
 		Iterator<Row> rowIterator = studentsSheet.iterator();
-		//end borrowed code
 
 		Row row = rowIterator.next(); //Skip the title row
 		
 	    while(rowIterator.hasNext()) {
-			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
 	        Cell cell = cellIterator.next();
-			//end borrowed code
 
             String name = cell.getStringCellValue();
             
@@ -66,18 +60,14 @@ public class Students {
 	}
 	
 	private void processTeamTable(){
-		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 		XSSFSheet teamsSheet = this.workBook.getSheetAt(1);
 		Iterator<Row> rowIterator = teamsSheet.iterator();
-		//end borrowed code
 
 		Row row = rowIterator.next(); //Title row
 
 		while(rowIterator.hasNext()) {
-			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
-			//end borrowed code
 
 	        if (cellIterator.hasNext()){
 	            Cell cell = cellIterator.next();

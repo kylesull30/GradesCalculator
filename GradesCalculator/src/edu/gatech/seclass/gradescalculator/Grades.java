@@ -125,11 +125,9 @@ public class Grades {
 		Row row = rowIterator.next(); //get assignment titles
 				
 		while(rowIterator.hasNext()) {
-			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 			row = rowIterator.next();
 			Iterator<Cell> columnIterator = row.cellIterator();
 		    Cell column = columnIterator.next();
-		    //end borrowed code
 		            
 		    ArrayList<Integer> studentGrades = new ArrayList<>();
 		    String key;
@@ -145,7 +143,6 @@ public class Grades {
 		         int grade = (int)column.getNumericCellValue();//type cast the double value from the sheet to int            
 		         studentGrades.add(grade);
 		     }
-		     //System.out.println("Adding " + key + studentGrades.size());       
 		     gradesHashMap.put(key, studentGrades);
 		            
 		            
@@ -154,19 +151,15 @@ public class Grades {
 	}
 	private void loadAttendanceTable(){
 		this.openFileForReading();
-		//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 		XSSFSheet attendanceSheet = this.workBook.getSheetAt(ATTENDANCE_SHEET);
 		Iterator<Row> rowIterator = attendanceSheet.iterator();
-		//end borrowed code
 		this.attendanceTable = new HashMap<>();
 		Row row = rowIterator.next(); //Skip the title row
 		
 	    while(rowIterator.hasNext()) {
-			//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 	        row = rowIterator.next();
 	        Iterator<Cell> cellIterator = row.cellIterator();
             Cell cell = cellIterator.next();
-    		//end borrowed code
 
             String gtID = String.format("%.0f", (cell.getNumericCellValue()));//remove scientific notation from the double value pulled from the sheet
             cell = cellIterator.next();
@@ -187,7 +180,7 @@ public class Grades {
 	}
 	public int getAttendanceById(String gtID){
 		this.loadAttendanceTable();
-		return this.attendanceTable.get(gtID).intValue();//Change form Integer to int
+		return this.attendanceTable.get(gtID).intValue();//Change from Integer to int
 	}
 
 	public int getAverageAssignmentGrade(String gtid) {
@@ -271,11 +264,9 @@ public class Grades {
 			Row row = rowIterator.next(); 
 			
 			while(rowIterator.hasNext()) {
-				//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 				row = rowIterator.next();
 				Iterator<Cell> columnIterator = row.cellIterator();
 			    Cell column = columnIterator.next();
-			    //end borrowed code
 			    
 			    if (String.format("%.0f", (column.getNumericCellValue())).equals(s.getGtid())){
 			    	this.addOrModifyCell(row, gradeIndex, hashOfGrades.get(s));   	
@@ -297,11 +288,9 @@ public class Grades {
 			Row row = rowIterator.next(); 
 			
 			while(rowIterator.hasNext()) {
-				//Begin borrowed code from http://viralpatel.net/blogs/java-read-write-excel-file-apache-poi/
 				row = rowIterator.next();
 				Iterator<Cell> columnIterator = row.cellIterator();
 			    Cell column = columnIterator.next();
-			    //end borrowed code
 			    
 			    if (column.getStringCellValue().equals(s)){
 			    	this.addOrModifyCell(row, gradeIndex, hashOfGrades.get(s));   	
